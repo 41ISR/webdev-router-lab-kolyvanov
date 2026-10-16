@@ -1,10 +1,15 @@
 import MovieCard from '../components/MovieCard.jsx';
 import GenreFilter from '../components/GenreFilter.jsx';
 import { movies, genres } from '../data/movies.js';
+import { useSearchParams } from 'react-router-dom';
 
 export default function MoviesPage() {
-  const selectedGenre = '';
-  const visibleMovies = movies;
+  const [searchParams] = useSearchParams()
+  const activeGenre = searchParams.get('genres') || ""
+
+  const visibleMovies = activeGenre
+    ? movies.filter(p => p.genre === activeGenre)
+    : movies;
 
   return (
     <section className="page-shell">
